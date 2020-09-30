@@ -1,3 +1,10 @@
 ﻿# JetBrain
 .idea
 
+# Cache & Bin
+/projects/Windows/obj/
+/projects/Windows/bin/
+/projects/Inputs/obj/
+/projects/Inputs/bin/
+/projects/Graphics/obj/
+/projects/Graphics/bin/
