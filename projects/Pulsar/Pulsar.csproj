@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="src\Graphics\Vulkan" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="GLFW.NET, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\libs\GLFW.NET.dll</HintPath>
+      </Reference>
+      <Reference Include="LiteNetLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\libs\LiteNetLib.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
