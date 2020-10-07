@@ -2,7 +2,7 @@
 {
     public struct GPUDrawCommand
     {
-        public int PirmitiveType;
+        public DrawModes Mode;
         public uint VertexCount;
         public uint FirstVertex;
     }

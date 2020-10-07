@@ -1,6 +1,4 @@
-﻿using Ubersharp.Client.Rendering;
-
-namespace Pulsar.Graphics
+﻿namespace Pulsar.Graphics
 {
     public struct GPUPipelineFormat
     {

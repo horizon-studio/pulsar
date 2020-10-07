@@ -1,11 +1,12 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+  using Pulsar.Audio.OpenAL;
 
-// ReSharper disable UnusedMember.Global
+  // ReSharper disable UnusedMember.Global
 
 // ReSharper disable once CheckNamespace
-namespace AlSharp
+namespace Pulsar.Audio.OpenAL
 {
     public class Alc
     {

@@ -1,7 +1,19 @@
-﻿namespace Pulsar.Graphics
+﻿using System;
+
+namespace Pulsar.Graphics
 {
-    public interface GPUShader
+    public class GPUShader : GPUResource
     {
-        ShaderStages GetStage();
+        private ShaderStages _stage;
+        
+        public GPUShader(uint h, ShaderStages stage) : base(h)
+        {
+            _stage = stage;
+        }
+
+        public ShaderStages GetStage()
+        {
+            return _stage;
+        }
     }
 }

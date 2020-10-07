@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace AlSharp
+namespace Pulsar.Audio.OpenAL
 {
     public static class Al
     {

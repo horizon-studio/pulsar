@@ -1,8 +1,10 @@
-﻿namespace Pulsar.Graphics
+﻿using Pulsar.Contexts.OpenGL;
+
+namespace Pulsar.Graphics
 {
     public enum DrawModes
     {
-        Triangles,
+        Triangles = Gl.GL_TRIANGLES,
         TrianglesStrip,
         TriangleFan,
         Quads,

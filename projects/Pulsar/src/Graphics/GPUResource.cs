@@ -1,17 +1,19 @@
 ﻿namespace Pulsar.Graphics
 {
-    public class GPUResource<T>
+    public class GPUResource
     {
-        protected T _handle;
+        protected uint _handle;
 
-        public GPUResource(T h)
+        public GPUResource(uint h)
         {
             _handle = h;
         }
 
-        public T GetHandle()
+        public uint GetHandle()
         {
             return _handle;
         }
+        
+        public static implicit operator uint(GPUResource res) => res._handle;
     }
 }

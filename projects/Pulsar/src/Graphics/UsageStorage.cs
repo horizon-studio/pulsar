@@ -1,4 +1,4 @@
-﻿using Pulsar.Graphics.OpenGL;
+﻿using Pulsar.Contexts.OpenGL;
 
 namespace Pulsar.Graphics
 {
