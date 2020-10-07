@@ -11,13 +11,15 @@ namespace Pulsar.Graphics
         private List<uint> _textures = new List<uint>();
         private List<uint> _framebuffers = new List<uint>();
         private List<uint> _shaders = new List<uint>();
+        private List<uint> _programs = new List<uint>();
         private List<GPUPipeline> _pipelines = new List<GPUPipeline>();
-        //TODO: store current binded objects 
+
+        private GPUResource _currentFramebuffer = new GPUResource(0);
+
+        private GPUResource _currentVAO;
+
+        private GPUResource _currentProgram;
         
-        public void Init()
-        {
-            
-        }
 
         public GPUShader CreateShader(string code, ShaderStages stage)
         {
@@ -43,20 +45,36 @@ namespace Pulsar.Graphics
             _textures.Remove(shader);
         }
 
-        public GPUPipeline CreatePipeline(GPUPipelineCreateInfo info)
+        public GPUShaderProgram CreateShaderProgram(GPUShader vertex, GPUShader fragment, GPUShader geometry, GPUShader tessEval, GPUShader tessCtrl)
         {
-            GPUResource sProgram = new GPUResource(Gl.glCreateProgram());
-            if (info.VertexShader != null)
+            GPUShaderProgram sProgram = new GPUShaderProgram(Gl.glCreateProgram());
+            
+            if (vertex != null)
             {
-                Gl.glAttachShader(sProgram.GetHandle(), info.VertexShader);
+                Gl.glAttachShader(sProgram, vertex);
             }
             
-            if (info.FragmentShader != null)
+            if (fragment != null)
             {
-                Gl.glAttachShader(sProgram.GetHandle(), info.FragmentShader);
+                Gl.glAttachShader(sProgram, fragment);
             }
-            //TODO: other shaders
-            Gl.glLinkProgram(sProgram.GetHandle());
+            
+            if (geometry != null)
+            {
+                Gl.glAttachShader(sProgram, geometry);
+            }
+            
+            if (tessEval != null)
+            {
+                Gl.glAttachShader(sProgram, tessEval);
+            }
+            
+            if (tessCtrl != null)
+            {
+                Gl.glAttachShader(sProgram, tessCtrl);
+            }
+            
+            Gl.glLinkProgram(sProgram);
             int success = 1;
             Gl.glGetProgramiv(sProgram.GetHandle(), Gl.GL_LINK_STATUS, new []{success});
             if (success == 0)
@@ -66,13 +84,21 @@ namespace Pulsar.Graphics
                 Gl.glGetProgramInfoLog(sProgram.GetHandle(), 512, out length, builder);
                 Console.WriteLine(builder.ToString());
             }
+
+            return sProgram;
+        }
+
+        public GPUPipeline CreatePipeline(GPUPipelineCreateInfo info)
+        {
+            GPUShaderProgram sProgram =
+                CreateShaderProgram(info.VertexShader, info.FragmentShader, info.GeometryShader, null, null);
             
             GPUResource vao = new GPUResource(Gl.glCreateVertexArray());
-            GPUResource[] buffers = new GPUResource[info.Format.BufferFormats.Length];
+            GPUBuffer[] buffers = new GPUBuffer[info.Format.BufferFormats.Length];
             uint i;
             for (i = 0; i < info.Format.BufferFormats.Length; i++)
             {
-                buffers[i] = new GPUResource(Gl.glCreateBuffer());
+                buffers[i] = new GPUBuffer(Gl.glCreateBuffer());
                 Gl.glNamedBufferStorage(buffers[i].GetHandle(), info.Format.BufferFormats[i].Size, IntPtr.Zero, Gl.GL_DYNAMIC_STORAGE_BIT);
             }
             
@@ -90,10 +116,10 @@ namespace Pulsar.Graphics
                 i++;
             }
 
-            GPUResource indicesBuffer = null;
+            GPUBuffer indicesBuffer = null;
             if (info.Format.UseIndices)
             {
-                indicesBuffer = new GPUResource(Gl.glCreateBuffer());
+                indicesBuffer = new GPUBuffer(Gl.glCreateBuffer());
                 Gl.glNamedBufferStorage(indicesBuffer.GetHandle(), info.Format.IndicesSize, IntPtr.Zero, info.Format.IndicesFlags);
             }
             

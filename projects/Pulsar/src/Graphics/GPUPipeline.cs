@@ -8,14 +8,14 @@ namespace Pulsar.Graphics
     public class GPUPipeline
     {
         private GPUContext _context;
-        private GPUResource _program;
+        private GPUShaderProgram _program;
         private GPUResource _vao;
-        private GPUResource[] _buffers;
+        private GPUBuffer[] _buffers;
         private IntPtr[] _bufferPtrs;
-        private GPUResource _indices;
+        private GPUBuffer _indices;
         private IntPtr _indicePtr;
         private GPUFramebuffer _framebuffer;
-        public GPUPipeline(GPUContext context, GPUResource shaderProgram, GPUResource vao, GPUResource[] buffers, GPUResource indices)
+        public GPUPipeline(GPUContext context, GPUShaderProgram shaderProgram, GPUResource vao, GPUBuffer[] buffers, GPUBuffer indices)
         {
             _context = context;
             _program = shaderProgram;
@@ -54,7 +54,6 @@ namespace Pulsar.Graphics
 
         public void UpdateData(uint indexBuffer, uint destOffset, byte[] data, uint length)
         {
-            //Marshal.Copy(data, 0, _bufferPtrs[indexBuffer] + (int)destOffset, (int)length);
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
             Gl.glNamedBufferSubData(_buffers[0].GetHandle(), 0, (uint)data.Length, handle.AddrOfPinnedObject());
             handle.Free();
