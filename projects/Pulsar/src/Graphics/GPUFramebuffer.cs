@@ -23,16 +23,6 @@ namespace Pulsar.Graphics
             DepthStencil = Gl.GL_DEPTH_STENCIL_ATTACHMENT
         }
 
-        public enum Masks : uint
-        {
-            Color = Gl.GL_COLOR_BUFFER_BIT,
-            Depth = Gl.GL_DEPTH_BUFFER_BIT,
-            Stencil = Gl.GL_STENCIL_BUFFER_BIT,
-            ColorDepth = Color | Depth,
-            ColorStencil = Color | Stencil,
-            DepthStencil = Depth | Stencil
-        }
-
         public enum Filters : int
         {
             Nearest = Gl.GL_NEAREST,
@@ -53,14 +43,9 @@ namespace Pulsar.Graphics
             AttachTexture(texture, att, 0);
         }
         public void CopyTo(GPUFramebuffer dst, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0,
-            int dstX1, int dstY1, Masks mask, Filters filter)
+            int dstX1, int dstY1, BufferMasks mask, Filters filter)
         {
             Gl.glBlitNamedFramebuffer(_handle, dst, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (int)filter);
-        }
-
-        public void Bind()
-        {
-            Gl.glBindFramebuffer(Gl.GL_FRAMEBUFFER, _handle);
         }
     }
 }
