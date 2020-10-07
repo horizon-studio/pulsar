@@ -1,31 +1,33 @@
-﻿namespace Pulsar.Graphics
+﻿using System;
+
+namespace Pulsar.Graphics
 {
-    public struct GPUPipelineFormat
+    public class GPUPipelineFormat : GPUResource
     {
+        public GPUPipelineFormat(uint h, GPUBufferFormat[] bufferFormats, GPUVertexFormat[] vertexFormats) : base(h)
+        {
+            BufferFormats = bufferFormats;
+            VertexFormats = vertexFormats;
+        }
+        
         /// <summary>
         /// Define used buffers.
         /// </summary>
-        public GPUBufferFormat[] BufferFormats;
+        private GPUBufferFormat[] BufferFormats;
 
         /// <summary>
         /// Define each vertex attributes.
         /// </summary>
-        public GPUVertexFormat[] VertexFormats;
+        private GPUVertexFormat[] VertexFormats;
 
-        /// <summary>
-        /// TRUE if the pipeline will use indices buffer.
-        /// FALSE otherwise.
-        /// </summary>
-        public bool UseIndices;
+        public GPUBufferFormat[] GetBufferFormats()
+        {
+            return BufferFormats;
+        }
 
-        /// <summary>
-        /// The size of the indices buffer.
-        /// </summary>
-        public uint IndicesSize;
-
-        /// <summary>
-        /// Flags for the indices buffer creation.
-        /// </summary>
-        public uint IndicesFlags;
+        public GPUVertexFormat[] GetVertexFormats()
+        {
+            return VertexFormats;
+        }
     }
 }

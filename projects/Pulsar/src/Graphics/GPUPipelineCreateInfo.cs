@@ -2,9 +2,10 @@
 {
     public struct GPUPipelineCreateInfo
     {
-        public GPUShader VertexShader;
-        public GPUShader FragmentShader;
-        public GPUShader GeometryShader;
+        public GPUShaderProgram ShaderProgram;
         public GPUPipelineFormat Format;
+        public bool UseIndices;
+        public uint IndicesSize;
+        public uint IndicesFlags;
     }
 }

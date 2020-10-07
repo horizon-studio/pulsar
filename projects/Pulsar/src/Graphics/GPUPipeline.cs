@@ -9,27 +9,15 @@ namespace Pulsar.Graphics
     {
         private GPUContext _context;
         private GPUShaderProgram _program;
-        private GPUResource _vao;
+        private GPUPipelineFormat _format;
         private GPUBuffer[] _buffers;
-        private IntPtr[] _bufferPtrs;
-        private GPUBuffer _indices;
-        private IntPtr _indicePtr;
-        private GPUFramebuffer _framebuffer;
-        public GPUPipeline(GPUContext context, GPUShaderProgram shaderProgram, GPUResource vao, GPUBuffer[] buffers, GPUBuffer indices)
+
+        public GPUPipeline(GPUContext context, GPUShaderProgram shaderProgram, GPUPipelineFormat format, GPUBuffer[] buffers)
         {
             _context = context;
             _program = shaderProgram;
-            _vao = vao;
+            _format = format;
             _buffers = buffers;
-            _indices = indices;
-            _bufferPtrs = new IntPtr[buffers.Length];
-            for (var i = 0; i < _bufferPtrs.Length; i++)
-            {
-                //_bufferPtrs[i] = Gl.glMapNamedBuffer(_buffers[i].GetHandle(), Gl.GL_WRITE_ONLY);
-                //Console.WriteLine("adresse :" + _bufferPtrs[i] + "  error : " + Gl.glGetError());
-            }
-            //if (indices != null)
-                //_indicePtr = Gl.glMapNamedBuffer(_indices.GetHandle(), Gl.GL_WRITE_ONLY);
         }
         
         public void SetUniform(string name, int value)
@@ -47,11 +35,6 @@ namespace Pulsar.Graphics
             throw new System.NotImplementedException();
         }
 
-        public void UpdateIndices(uint destOffset, byte[] data, uint length)
-        {
-            Marshal.Copy(data, 0, _indicePtr + (int)destOffset, (int)length);
-        }
-
         public void UpdateData(uint indexBuffer, uint destOffset, byte[] data, uint length)
         {
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
@@ -61,17 +44,14 @@ namespace Pulsar.Graphics
 
         public void Draw(GPUDrawCommand command)
         {
-            Matrix m = Matrix.PerspectiveFovLH(70, 2.6f, 0.1f, 10);
-            //TODO: this is debug impl , check if already binded
-            //Gl.glBindFramebuffer(Gl.GL_FRAMEBUFFER, _framebuffer.GetHandle());
-            Gl.glUseProgram(_program.GetHandle());
-            Gl.glBindVertexArray(_vao.GetHandle());
+            for (int i = 0; i < _format.GetBufferFormats().Length; i++)
+            {
+                Gl.glVertexArrayVertexBuffer(_format, _format.GetBufferFormats()[i].BufferIndex, _buffers[i], _format.GetBufferFormats()[i].Offset, (int)_format.GetBufferFormats()[i].Stride);
+                i++;
+            }
+            _context.BindShaderProgram(_program);
+            _context.BindFormat(_format);
             Gl.glDrawArrays((int)command.Mode, (int)command.FirstVertex, (int)command.VertexCount);
-        }
-
-        public void SetFramebuffer(GPUFramebuffer framebuffer)
-        {
-            _framebuffer = framebuffer;
         }
     }
 }

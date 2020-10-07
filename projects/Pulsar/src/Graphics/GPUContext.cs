@@ -13,10 +13,11 @@ namespace Pulsar.Graphics
         private List<uint> _shaders = new List<uint>();
         private List<uint> _programs = new List<uint>();
         private List<GPUPipeline> _pipelines = new List<GPUPipeline>();
+        private List<uint> _vaos = new List<uint>();
 
         private GPUResource _currentFramebuffer = new GPUResource(0);
 
-        private GPUResource _currentVAO;
+        private GPUResource _currentVao;
 
         private GPUResource _currentProgram;
         
@@ -88,42 +89,44 @@ namespace Pulsar.Graphics
             return sProgram;
         }
 
+        public GPUPipelineFormat CreatePipelineFormat(GPUBufferFormat[] bufferFormats, GPUVertexFormat[] vertexFormats)
+        {
+            GPUPipelineFormat f = new GPUPipelineFormat(Gl.glCreateVertexArray(), bufferFormats, vertexFormats);
+            _vaos.Add(f);
+            return f;
+        }
+
+        public void DeletePipelineFormat(GPUPipelineFormat format)
+        {
+            _vaos.Remove(format);
+            Gl.glDeleteVertexArrays(1, new uint[]{format});
+        }
+        
         public GPUPipeline CreatePipeline(GPUPipelineCreateInfo info)
         {
-            GPUShaderProgram sProgram =
-                CreateShaderProgram(info.VertexShader, info.FragmentShader, info.GeometryShader, null, null);
-            
-            GPUResource vao = new GPUResource(Gl.glCreateVertexArray());
-            GPUBuffer[] buffers = new GPUBuffer[info.Format.BufferFormats.Length];
+            GPUBuffer[] buffers = new GPUBuffer[info.Format.GetBufferFormats().Length];
             uint i;
-            for (i = 0; i < info.Format.BufferFormats.Length; i++)
+            for (i = 0; i < info.Format.GetBufferFormats().Length; i++)
             {
-                buffers[i] = new GPUBuffer(Gl.glCreateBuffer());
-                Gl.glNamedBufferStorage(buffers[i].GetHandle(), info.Format.BufferFormats[i].Size, IntPtr.Zero, Gl.GL_DYNAMIC_STORAGE_BIT);
+                buffers[i] = CreateBuffer();
+                Gl.glNamedBufferStorage(buffers[i].GetHandle(), info.Format.GetBufferFormats()[i].Size, IntPtr.Zero, Gl.GL_DYNAMIC_STORAGE_BIT);
             }
             
-            for (i = 0; i < info.Format.BufferFormats.Length; i++)
+            for (i = 0; i < info.Format.GetBufferFormats().Length; i++)
             {
-                Gl.glVertexArrayVertexBuffer(vao.GetHandle(), info.Format.BufferFormats[i].BufferIndex, buffers[i].GetHandle(), info.Format.BufferFormats[i].Offset, (int)info.Format.BufferFormats[i].Stride);
+                Gl.glVertexArrayVertexBuffer(info.Format, info.Format.GetBufferFormats()[i].BufferIndex, buffers[i].GetHandle(), info.Format.GetBufferFormats()[i].Offset, (int)info.Format.GetBufferFormats()[i].Stride);
                 i++;
             }
             
-            for (i = 0; i < info.Format.VertexFormats.Length; i++)
+            for (i = 0; i < info.Format.GetVertexFormats().Length; i++)
             {
-                Gl.glEnableVertexArrayAttrib(vao.GetHandle(), i);
-                Gl.glVertexArrayAttribFormat(vao.GetHandle(), i, (int)info.Format.VertexFormats[i].Size, info.Format.VertexFormats[i].Type, info.Format.VertexFormats[i].Normalized, info.Format.VertexFormats[i].RelativeOffset);
-                Gl.glVertexArrayAttribBinding(vao.GetHandle(), i, info.Format.VertexFormats[i].BufferIndex);
+                Gl.glEnableVertexArrayAttrib(info.Format, i);
+                Gl.glVertexArrayAttribFormat(info.Format, i, (int)info.Format.GetVertexFormats()[i].Size, info.Format.GetVertexFormats()[i].Type, info.Format.GetVertexFormats()[i].Normalized, info.Format.GetVertexFormats()[i].RelativeOffset);
+                Gl.glVertexArrayAttribBinding(info.Format, i, info.Format.GetVertexFormats()[i].BufferIndex);
                 i++;
             }
 
-            GPUBuffer indicesBuffer = null;
-            if (info.Format.UseIndices)
-            {
-                indicesBuffer = new GPUBuffer(Gl.glCreateBuffer());
-                Gl.glNamedBufferStorage(indicesBuffer.GetHandle(), info.Format.IndicesSize, IntPtr.Zero, info.Format.IndicesFlags);
-            }
-            
-            GPUPipeline pipe = new GPUPipeline(this, sProgram, vao, buffers, null);
+            GPUPipeline pipe = new GPUPipeline(this, info.ShaderProgram, info.Format, buffers);
             _pipelines.Add(pipe);
             return pipe;
         }
@@ -143,7 +146,7 @@ namespace Pulsar.Graphics
 
         public void DeleteBuffer(GPUBuffer buffer)
         {
-            Gl.glDeleteBuffers(0, new uint[]{buffer});
+            Gl.glDeleteBuffers(1, new uint[]{buffer});
             _buffers.Remove(buffer);
         }
 
@@ -156,7 +159,7 @@ namespace Pulsar.Graphics
 
         public void DeleteTexture(GPUTexture texture)
         {
-            Gl.glDeleteTextures(0, new uint[]{texture});
+            Gl.glDeleteTextures(1, new uint[]{texture});
             _textures.Remove(texture);
         }
 
@@ -169,13 +172,40 @@ namespace Pulsar.Graphics
 
         public void DeleteFramebuffer(GPUFramebuffer framebuffer)
         {
-            Gl.glDeleteFramebuffers(0, new uint[]{framebuffer});
+            Gl.glDeleteFramebuffers(1, new uint[]{framebuffer});
             _framebuffers.Remove(framebuffer);
         }
 
         public GPUFramebuffer GetDefaultFramebuffer()
         {
             return new GPUFramebuffer(0);
+        }
+
+        public void BindFormat(GPUPipelineFormat format)
+        {
+            if (_currentVao != format)
+            {
+                Gl.glBindVertexArray(format);
+                _currentVao = format;
+            }
+        }
+
+        public void BindShaderProgram(GPUShaderProgram program)
+        {
+            if (_currentProgram != program)
+            {
+                Gl.glUseProgram(program);
+                _currentProgram = program;
+            }
+        }
+
+        public void BindFramebuffer(GPUFramebuffer fb)
+        {
+            if (_currentFramebuffer != fb)
+            {
+                Gl.glBindFramebuffer(Gl.GL_FRAMEBUFFER, fb);
+                _currentFramebuffer = fb;
+            }
         }
     }
 }
