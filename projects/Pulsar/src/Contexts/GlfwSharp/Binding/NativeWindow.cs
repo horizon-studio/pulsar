@@ -23,7 +23,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         public bool Equals(NativeWindow window)
         {
             if (ReferenceEquals(null, window)) return false;
-            return ReferenceEquals(this, window) || Window.Equals(window.Window);
+            return ReferenceEquals(this, window) || GlfwWindow.Equals(window.GlfwWindow);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <inheritdoc cref="Object.GetHashCode" />
         public override int GetHashCode()
         {
-            return Window.GetHashCode();
+            return GlfwWindow.GetHashCode();
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     The window instance this object wraps.
         /// </summary>
-        protected readonly Window Window;
+        protected readonly GlfwWindow GlfwWindow;
 
         private string title;
 
@@ -152,8 +152,8 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
             get => new Rectangle(Position, ClientSize);
             set
             {
-                Glfw.SetWindowPosition(Window, value.X, value.Y);
-                Glfw.SetWindowSize(Window, value.Width, value.Height);
+                Glfw.SetWindowPosition(GlfwWindow, value.X, value.Y);
+                Glfw.SetWindowSize(GlfwWindow, value.Width, value.Height);
             }
         }
 
@@ -165,15 +165,15 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetWindowSize(Window, out var width, out var dummy);
+                Glfw.GetWindowSize(GlfwWindow, out var width, out var dummy);
                 return width;
             }
             set
             {
                 if (value < 1) 
                     throw new Exception("Window width muts be greater than 0.");
-                Glfw.GetWindowSize(Window, out var dummy, out var height);
-                Glfw.SetWindowSize(Window, value, height);
+                Glfw.GetWindowSize(GlfwWindow, out var dummy, out var height);
+                Glfw.SetWindowSize(GlfwWindow, value, height);
             }
         }
         
@@ -185,15 +185,15 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetWindowSize(Window, out var dummy, out var height);
+                Glfw.GetWindowSize(GlfwWindow, out var dummy, out var height);
                 return height;
             }
             set
             {
                 if (value < 1) 
                     throw new Exception("Window height muts be greater than 0.");
-                Glfw.GetWindowSize(Window, out var width, out var dummy);
-                Glfw.SetWindowSize(Window, width, value);
+                Glfw.GetWindowSize(GlfwWindow, out var width, out var dummy);
+                Glfw.SetWindowSize(GlfwWindow, width, value);
             }
         }
 
@@ -207,10 +207,10 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetWindowSize(Window, out var width, out var height);
+                Glfw.GetWindowSize(GlfwWindow, out var width, out var height);
                 return new Size(width, height);
             }
-            set => Glfw.SetWindowSize(Window, value.Width, value.Height);
+            set => Glfw.SetWindowSize(GlfwWindow, value.Width, value.Height);
         }
 
         /// <summary>
@@ -234,8 +234,8 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         [JetBrains.Annotations.NotNull]
         public string Clipboard
         {
-            get => Glfw.GetClipboardString(Window);
-            set => Glfw.SetClipboardString(Window, value);
+            get => Glfw.GetClipboardString(GlfwWindow);
+            set => Glfw.SetClipboardString(GlfwWindow, value);
         }
 
         /// <summary>
@@ -246,8 +246,8 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </value>
         public CursorMode CursorMode
         {
-            get => (CursorMode) Glfw.GetInputMode(Window, InputMode.Cursor);
-            set => Glfw.SetInputMode(Window, InputMode.Cursor, (int) value);
+            get => (CursorMode) Glfw.GetInputMode(GlfwWindow, InputMode.Cursor);
+            set => Glfw.SetInputMode(GlfwWindow, InputMode.Cursor, (int) value);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
             {
                 try
                 {
-                    return Native.GetWin32Window(Window);
+                    return Native.GetWin32Window(GlfwWindow);
                 }
                 catch (Exception)
                 {
@@ -287,7 +287,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     <c>true</c> if this instance is closing; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosing => Glfw.WindowShouldClose(Window);
+        public bool IsClosing => Glfw.WindowShouldClose(GlfwWindow);
 
         /// <summary>
         ///     Gets a value indicating whether this instance is decorated.
@@ -295,7 +295,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     <c>true</c> if this instance is decorated; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDecorated => Glfw.GetWindowAttribute(Window, WindowAttribute.Decorated);
+        public bool IsDecorated => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Decorated);
 
         /// <summary>
         ///     Gets a value indicating whether this instance is floating (top-most, always-on-top).
@@ -303,7 +303,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     <c>true</c> if this instance is floating; otherwise, <c>false</c>.
         /// </value>
-        public bool IsFloating => Glfw.GetWindowAttribute(Window, WindowAttribute.Floating);
+        public bool IsFloating => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Floating);
 
         /// <summary>
         ///     Gets a value indicating whether this instance is focused.
@@ -311,7 +311,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     <c>true</c> if this instance is focused; otherwise, <c>false</c>.
         /// </value>
-        public bool IsFocused => Glfw.GetWindowAttribute(Window, WindowAttribute.Focused);
+        public bool IsFocused => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Focused);
 
         /// <summary>
         ///     Gets a value indicating whether this instance is resizable.
@@ -319,7 +319,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     <c>true</c> if this instance is resizable; otherwise, <c>false</c>.
         /// </value>
-        public bool IsResizable => Glfw.GetWindowAttribute(Window, WindowAttribute.Resizable);
+        public bool IsResizable => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Resizable);
 
         /// <summary>
         ///     Gets or sets a value indicating whether this <see cref="NativeWindow" /> is maximized.
@@ -330,13 +330,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </value>
         public bool Maximized
         {
-            get => Glfw.GetWindowAttribute(Window, WindowAttribute.Maximized);
+            get => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Maximized);
             set
             {
                 if (value)
-                    Glfw.MaximizeWindow(Window);
+                    Glfw.MaximizeWindow(GlfwWindow);
                 else
-                    Glfw.RestoreWindow(Window);
+                    Glfw.RestoreWindow(GlfwWindow);
             }
         }
 
@@ -349,13 +349,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </value>
         public bool Minimized
         {
-            get => Glfw.GetWindowAttribute(Window, WindowAttribute.AutoIconify);
+            get => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.AutoIconify);
             set
             {
                 if (value)
-                    Glfw.IconifyWindow(Window);
+                    Glfw.IconifyWindow(GlfwWindow);
                 else
-                    Glfw.RestoreWindow(Window);
+                    Glfw.RestoreWindow(GlfwWindow);
             }
         }
 
@@ -366,7 +366,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <value>
         ///     The monitor.
         /// </value>
-        public Monitor Monitor => Glfw.GetWindowMonitor(Window);
+        public Monitor Monitor => Glfw.GetWindowMonitor(GlfwWindow);
 
         /// <summary>
         ///     Gets or sets the mouse position in screen-coordinates relative to the client area of the window.
@@ -378,10 +378,10 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetCursorPosition(Window, out var x, out var y);
+                Glfw.GetCursorPosition(GlfwWindow, out var x, out var y);
                 return new Point(Convert.ToInt32(x), Convert.ToInt32(y));
             }
-            set => Glfw.SetCursorPosition(Window, value.X, value.Y);
+            set => Glfw.SetCursorPosition(GlfwWindow, value.X, value.Y);
         }
 
         /// <summary>
@@ -394,14 +394,14 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetWindowPosition(Window, out var x, out var y);
-                Glfw.GetWindowFrameSize(Window, out var l, out var t, out var dummy1, out var dummy2);
+                Glfw.GetWindowPosition(GlfwWindow, out var x, out var y);
+                Glfw.GetWindowFrameSize(GlfwWindow, out var l, out var t, out var dummy1, out var dummy2);
                 return new Point(x - l, y - t);
             }
             set
             {
-                Glfw.GetWindowFrameSize(Window, out var l, out var t, out var dummy1, out var dummy2);
-                Glfw.SetWindowPosition(Window, value.X + l, value.Y + t);
+                Glfw.GetWindowFrameSize(GlfwWindow, out var l, out var t, out var dummy1, out var dummy2);
+                Glfw.SetWindowPosition(GlfwWindow, value.X + l, value.Y + t);
             }
         }
 
@@ -415,14 +415,14 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             get
             {
-                Glfw.GetWindowSize(Window, out var width, out var height);
-                Glfw.GetWindowFrameSize(Window, out var l, out var t, out var r, out var b);
+                Glfw.GetWindowSize(GlfwWindow, out var width, out var height);
+                Glfw.GetWindowFrameSize(GlfwWindow, out var l, out var t, out var r, out var b);
                 return new Size(width + l + r, height + t + b);
             }
             set
             {
-                Glfw.GetWindowFrameSize(Window, out var l, out var t, out var r, out var b);
-                Glfw.SetWindowSize(Window, value.Width - l - r, value.Height - t - b);
+                Glfw.GetWindowFrameSize(GlfwWindow, out var l, out var t, out var r, out var b);
+                Glfw.SetWindowSize(GlfwWindow, value.Width - l - r, value.Height - t - b);
             }
         }
 
@@ -437,9 +437,9 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public bool StickyKeys
         {
-            get => Glfw.GetInputMode(Window, InputMode.StickyKeys) == (int) Constants.True;
+            get => Glfw.GetInputMode(GlfwWindow, InputMode.StickyKeys) == (int) Constants.True;
             set =>
-                Glfw.SetInputMode(Window, InputMode.StickyKeys, value ? (int) Constants.True : (int) Constants.False);
+                Glfw.SetInputMode(GlfwWindow, InputMode.StickyKeys, value ? (int) Constants.True : (int) Constants.False);
         }
 
         /// <summary>
@@ -454,9 +454,9 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public bool StickyMouseButtons
         {
-            get => Glfw.GetInputMode(Window, InputMode.StickyMouseButton) == (int) Constants.True;
+            get => Glfw.GetInputMode(GlfwWindow, InputMode.StickyMouseButton) == (int) Constants.True;
             set =>
-                Glfw.SetInputMode(Window, InputMode.StickyMouseButton,
+                Glfw.SetInputMode(GlfwWindow, InputMode.StickyMouseButton,
                     value ? (int) Constants.True : (int) Constants.False);
         }
 
@@ -473,7 +473,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
             set
             {
                 title = value;
-                Glfw.SetWindowTitle(Window, value ?? string.Empty);
+                Glfw.SetWindowTitle(GlfwWindow, value ?? string.Empty);
             }
         }
 
@@ -485,8 +485,8 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </value>
         public IntPtr UserPointer
         {
-            get => Glfw.GetWindowUserPointer(Window);
-            set => Glfw.SetWindowUserPointer(Window, value);
+            get => Glfw.GetWindowUserPointer(GlfwWindow);
+            set => Glfw.SetWindowUserPointer(GlfwWindow, value);
         }
 
         /// <summary>
@@ -513,28 +513,28 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </value>
         public bool Visible
         {
-            get => Glfw.GetWindowAttribute(Window, WindowAttribute.Visible);
+            get => Glfw.GetWindowAttribute(GlfwWindow, WindowAttribute.Visible);
             set
             {
                 if (value)
-                    Glfw.ShowWindow(Window);
+                    Glfw.ShowWindow(GlfwWindow);
                 else
-                    Glfw.HideWindow(Window);
+                    Glfw.HideWindow(GlfwWindow);
             }
         }
 
         #region Operators
 
         /// <summary>
-        ///     Performs an implicit conversion from <see cref="NativeWindow" /> to <see cref="Binding.Window" />.
+        ///     Performs an implicit conversion from <see cref="NativeWindow" /> to <see cref="GlfwWindow" />.
         /// </summary>
         /// <param name="nativeWindow">The game window.</param>
         /// <returns>
         ///     The result of the conversion.
         /// </returns>
-        public static implicit operator Window(NativeWindow nativeWindow)
+        public static implicit operator GlfwWindow(NativeWindow nativeWindow)
         {
-            return nativeWindow.Window;
+            return nativeWindow.GlfwWindow;
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </returns>
         public static implicit operator IntPtr(NativeWindow nativeWindow)
         {
-            return nativeWindow.Window;
+            return nativeWindow.GlfwWindow;
         }
 
         #endregion
@@ -558,7 +558,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Initializes a new instance of the <see cref="NativeWindow" /> class.
         /// </summary>
-        public NativeWindow() : this(800, 600, string.Empty, Monitor.None, Window.None)
+        public NativeWindow() : this(800, 600, string.Empty, Monitor.None, GlfwWindow.None)
         {
         }
 
@@ -569,7 +569,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="height">The desired height, in screen coordinates, of the window. This must be greater than zero.</param>
         /// <param name="title">The initial window title.</param>
         public NativeWindow(int width, int height, [CanBeNull] string title) : this(width, height, title, Monitor.None,
-            Window.None)
+            GlfwWindow.None)
         {
         }
 
@@ -581,14 +581,14 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="title">The initial window title.</param>
         /// <param name="monitor">The monitor to use for full screen mode, or <see cref="Binding.Monitor.None" /> for windowed mode.</param>
         /// <param name="share">
-        ///     A window instance whose context to share resources with, or <see cref="Binding.Window.None" /> to not share
+        ///     A window instance whose context to share resources with, or <see cref="GlfwWindow.None" /> to not share
         ///     resources..
         /// </param>
-        public NativeWindow(int width, int height, [CanBeNull] string title, Monitor monitor, Window share) : base(true)
+        public NativeWindow(int width, int height, [CanBeNull] string title, Monitor monitor, GlfwWindow share) : base(true)
         {
             this.title = title ?? string.Empty;
-            Window = Glfw.CreateWindow(width, height, title ?? string.Empty, monitor, share);
-            SetHandle(Window);
+            GlfwWindow = Glfw.CreateWindow(width, height, title ?? string.Empty, monitor, share);
+            SetHandle(GlfwWindow);
             if (Glfw.GetClientApi(this) != ClientApi.None)
                 MakeCurrent();
             BindCallbacks();
@@ -618,7 +618,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public new void Close()
         {
-            Glfw.SetWindowShouldClose(Window, true);
+            Glfw.SetWindowShouldClose(GlfwWindow, true);
             OnClosing();
             base.Close();
         }
@@ -628,7 +628,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void Focus()
         {
-            Glfw.FocusWindow(Window);
+            Glfw.FocusWindow(GlfwWindow);
         }
 
         /// <summary>
@@ -645,7 +645,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="monitor">The monitor to display the window fullscreen.</param>
         public void Fullscreen(Monitor monitor)
         {
-            Glfw.SetWindowMonitor(Window, monitor, 0, 0, 0, 0, -1);
+            Glfw.SetWindowMonitor(GlfwWindow, monitor, 0, 0, 0, 0, -1);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void MakeCurrent()
         {
-            Glfw.MakeContextCurrent(Window);
+            Glfw.MakeContextCurrent(GlfwWindow);
         }
 
         /// <summary>
@@ -662,7 +662,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void Maximize()
         {
-            Glfw.MaximizeWindow(Window);
+            Glfw.MaximizeWindow(GlfwWindow);
         }
 
         /// <summary>
@@ -671,7 +671,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void Minimize()
         {
-            Glfw.IconifyWindow(Window);
+            Glfw.IconifyWindow(GlfwWindow);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void Restore()
         {
-            Glfw.RestoreWindow(Window);
+            Glfw.RestoreWindow(GlfwWindow);
         }
 
         /// <summary>
@@ -691,7 +691,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="denominator">The denominator of the desired aspect ratio.</param>
         public void SetAspectRatio(int numerator, int denominator)
         {
-            Glfw.SetWindowAspectRatio(Window, numerator, denominator);
+            Glfw.SetWindowAspectRatio(GlfwWindow, numerator, denominator);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="images">One or more images to set as an icon.</param>
         public void SetIcons([JetBrains.Annotations.NotNull] params Image[] images)
         {
-            Glfw.SetWindowIcon(Window, images.Length, images);
+            Glfw.SetWindowIcon(GlfwWindow, images.Length, images);
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         public void SetMonitor(Monitor monitor, int x, int y, int width, int height,
             int refreshRate = (int) Constants.Default)
         {
-            Glfw.SetWindowMonitor(Window, monitor, x, y, width, height, refreshRate);
+            Glfw.SetWindowMonitor(GlfwWindow, monitor, x, y, width, height, refreshRate);
         }
 
         /// <summary>
@@ -742,7 +742,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="maxHeight">The maximum height of the client area.</param>
         public void SetSizeLimits(int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
-            Glfw.SetWindowSizeLimits(Window, minWidth, minHeight, maxWidth, maxHeight);
+            Glfw.SetWindowSizeLimits(GlfwWindow, minWidth, minHeight, maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -753,7 +753,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </summary>
         public void SwapBuffers()
         {
-            Glfw.SwapBuffers(Window);
+            Glfw.SwapBuffers(GlfwWindow);
         }
 
         /// <summary>
@@ -777,7 +777,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         {
             try
             {
-                Glfw.DestroyWindow(Window);
+                Glfw.DestroyWindow(GlfwWindow);
                 return true;
             }
             catch (Exception)
@@ -804,21 +804,21 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
             windowMaximizeCallback = (_, maximized) => OnMaximizeChanged(maximized);
             windowContentScaleCallback = (_, x, y) => OnContentScaleChanged(x, y);
 
-            Glfw.SetWindowPositionCallback(Window, windowPositionCallback);
-            Glfw.SetWindowSizeCallback(Window, windowSizeCallback);
-            Glfw.SetWindowFocusCallback(Window, windowFocusCallback);
-            Glfw.SetCloseCallback(Window, closeCallback);
-            Glfw.SetDropCallback(Window, dropCallback);
-            Glfw.SetCursorPositionCallback(Window, cursorPositionCallback);
-            Glfw.SetCursorEnterCallback(Window, cursorEnterCallback);
-            Glfw.SetMouseButtonCallback(Window, mouseButtonCallback);
-            Glfw.SetScrollCallback(Window, scrollCallback);
-            Glfw.SetCharModsCallback(Window, charModsCallback);
-            Glfw.SetFramebufferSizeCallback(Window, framebufferSizeCallback);
-            Glfw.SetWindowRefreshCallback(Window, windowRefreshCallback);
-            Glfw.SetKeyCallback(Window, keyCallback);
-            Glfw.SetWindowMaximizeCallback(Window, windowMaximizeCallback);
-            Glfw.SetWindowContentScaleCallback(Window, windowContentScaleCallback);
+            Glfw.SetWindowPositionCallback(GlfwWindow, windowPositionCallback);
+            Glfw.SetWindowSizeCallback(GlfwWindow, windowSizeCallback);
+            Glfw.SetWindowFocusCallback(GlfwWindow, windowFocusCallback);
+            Glfw.SetCloseCallback(GlfwWindow, closeCallback);
+            Glfw.SetDropCallback(GlfwWindow, dropCallback);
+            Glfw.SetCursorPositionCallback(GlfwWindow, cursorPositionCallback);
+            Glfw.SetCursorEnterCallback(GlfwWindow, cursorEnterCallback);
+            Glfw.SetMouseButtonCallback(GlfwWindow, mouseButtonCallback);
+            Glfw.SetScrollCallback(GlfwWindow, scrollCallback);
+            Glfw.SetCharModsCallback(GlfwWindow, charModsCallback);
+            Glfw.SetFramebufferSizeCallback(GlfwWindow, framebufferSizeCallback);
+            Glfw.SetWindowRefreshCallback(GlfwWindow, windowRefreshCallback);
+            Glfw.SetKeyCallback(GlfwWindow, keyCallback);
+            Glfw.SetWindowMaximizeCallback(GlfwWindow, windowMaximizeCallback);
+            Glfw.SetWindowContentScaleCallback(GlfwWindow, windowContentScaleCallback);
         }
 
         private void OnFileDrop(int count, IntPtr pointer)
@@ -965,7 +965,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
             Closing?.Invoke(this, args);
             if (args.Cancel)
             {
-                Glfw.SetWindowShouldClose(Window, false);
+                Glfw.SetWindowShouldClose(GlfwWindow, false);
             }
             else
             {

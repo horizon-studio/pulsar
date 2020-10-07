@@ -1,11 +1,29 @@
 ﻿using System;
+using Pulsar.Contexts.GlfwSharp.Binding;
+using Pulsar.Graphics;
 
 namespace Pulsar.Application
 {
     public abstract class Application : IDisposable
     {
         protected ApplicationHost AppHost;
-        public bool IsRunning { get; protected set; } = true;
+        protected Window Window;
+        protected GPUContext _gpuContext;
+        private uint _swapInterval = 0;
+        public uint SwapInterval
+        {
+            get
+            {
+                return _swapInterval;
+            }
+            set
+            {
+                _swapInterval = value;
+                Glfw.SwapInterval((int)_swapInterval);
+            }
+        }
+        
+        public bool IsRunning { get; set; } = true;
 
         public abstract void Init();
 
@@ -20,6 +38,16 @@ namespace Pulsar.Application
         public void SetHost(ApplicationHost host)
         {
             AppHost = host;
+        }
+
+        public void SetWindow(Window w)
+        {
+            Window = w;
+        }
+
+        public void SetGPUContext(GPUContext c)
+        {
+            _gpuContext = c;
         }
     }
 }

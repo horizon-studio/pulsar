@@ -1,5 +1,8 @@
 ﻿using System;
 using Pulsar.Contexts;
+using Pulsar.Contexts.GlfwSharp.Binding;
+using Pulsar.Contexts.OpenGL;
+using Pulsar.Graphics;
 
 namespace Pulsar.Application
 {
@@ -21,15 +24,26 @@ namespace Pulsar.Application
         private int _fps;
 
         private float _lastDelta;
-        
-        public ApplicationHost(Pulsar.Application.Application app)
+
+        private Window _window;
+        public ApplicationHost(Application app)
         {
             SetApp(app);
         }
         
         public void Start()
         {
+            //TODO: use logger , erro handling
+            Glfw.Init();
+            Glfw.WindowHint(Hint.Visible, false);
+            _window = new Window(800, 600, "");
+            _window.MakeCurrent();
+            Gl.Init(Glfw.GetProcAddress);
+            _application.SetWindow(_window);
+            _application.SetGPUContext(new GPUContext());
             _application.Init();
+            _window.Visible = true;
+            
             while (_application.IsRunning)
             {
                 _now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -41,6 +55,10 @@ namespace Pulsar.Application
                     _updatesCount++;
                 } else if ((_targetRender > 0 && _now - _lastRender > _renderInterval) || _targetRender == -1) {
                     _application.Render(_lastDelta);
+                    _window.SwapBuffers();
+                    Glfw.PollEvents();
+                    if (_window.IsClosing)
+                        _application.IsRunning = false;
                     _lastRender = _now;
                     _rendersCount++;
                 }

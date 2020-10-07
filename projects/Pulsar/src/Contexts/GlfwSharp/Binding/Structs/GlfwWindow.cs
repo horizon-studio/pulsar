@@ -7,12 +7,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
     ///     Wrapper around a GLFW window pointer.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Window : IEquatable<Window>
+    public struct GlfwWindow : IEquatable<GlfwWindow>
     {
         /// <summary>
         ///     Describes a default/null instance.
         /// </summary>
-        public static readonly Window None;
+        public static readonly GlfwWindow None;
 
         /// <summary>
         ///     Internal pointer.
@@ -20,26 +20,26 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         private readonly IntPtr handle;
 
         /// <summary>
-        ///     Performs an implicit conversion from <see cref="Window" /> to <see cref="IntPtr" />.
+        ///     Performs an implicit conversion from <see cref="GlfwWindow" /> to <see cref="IntPtr" />.
         /// </summary>
-        /// <param name="window">The window.</param>
+        /// <param name="glfwWindow">The window.</param>
         /// <returns>
         ///     The result of the conversion.
         /// </returns>
-        public static implicit operator IntPtr(Window window) { return window.handle; }
+        public static implicit operator IntPtr(GlfwWindow glfwWindow) { return glfwWindow.handle; }
         
         /// <summary>
-        ///     Performs an explicit conversion from <see cref="IntPtr"/> to <see cref="Window"/>.
+        ///     Performs an explicit conversion from <see cref="IntPtr"/> to <see cref="GlfwWindow"/>.
         /// </summary>
         /// <param name="handle">A pointer representing the window handle.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Window(IntPtr handle) => new Window(handle);
+        public static explicit operator GlfwWindow(IntPtr handle) => new GlfwWindow(handle);
 
         /// <summary>
-        /// Creates a new instance of the <see cref="Window"/> struct.
+        /// Creates a new instance of the <see cref="GlfwWindow"/> struct.
         /// </summary>
         /// <param name="handle">A pointer representing the window handle.</param>
-        public Window(IntPtr handle)
+        public GlfwWindow(IntPtr handle)
         {
             this.handle = handle;
         }
@@ -53,13 +53,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         public override string ToString() { return handle.ToString(); }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="Window" />, is equal to this instance.
+        ///     Determines whether the specified <see cref="GlfwWindow" />, is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Window" /> to compare with this instance.</param>
+        /// <param name="other">The <see cref="GlfwWindow" /> to compare with this instance.</param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="Window" /> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="GlfwWindow" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Window other) { return handle.Equals(other.handle); }
+        public bool Equals(GlfwWindow other) { return handle.Equals(other.handle); }
 
         /// <summary>
         ///     Determines whether the specified <see cref="System.Object" />, is equal to this instance.
@@ -70,7 +70,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is Window window)
+            if (obj is GlfwWindow window)
                 return Equals(window);
             return false;
         }
@@ -100,7 +100,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator ==(Window left, Window right) { return left.Equals(right); }
+        public static bool operator ==(GlfwWindow left, GlfwWindow right) { return left.Equals(right); }
 
         /// <summary>
         ///     Implements the operator !=.
@@ -110,6 +110,6 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        public static bool operator !=(Window left, Window right) { return !left.Equals(right); }
+        public static bool operator !=(GlfwWindow left, GlfwWindow right) { return !left.Equals(right); }
     }
 }

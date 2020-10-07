@@ -358,13 +358,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         #region Properties
 
         /// <summary>
-        ///     Gets the window whose OpenGL or OpenGL ES context is current on the calling thread, or <see cref="Window.None" />
+        ///     Gets the window whose OpenGL or OpenGL ES context is current on the calling thread, or <see cref="GlfwWindow.None" />
         ///     if no context is current.
         /// </summary>
         /// <value>
         ///     The current context.
         /// </value>
-        public static Window CurrentContext => GetCurrentContext();
+        public static GlfwWindow CurrentContext => GetCurrentContext();
 
         /// <summary>
         ///     Gets an array of handles for all currently connected monitors.
@@ -517,42 +517,42 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         public static extern ErrorCallback SetErrorCallback(ErrorCallback errorHandler);
 
         [DllImport(LIBRARY, EntryPoint = "glfwCreateWindow", CallingConvention = CallingConvention.Cdecl)]
-        private static extern Window CreateWindow(int width, int height, byte[] title, Monitor monitor, Window share);
+        private static extern GlfwWindow CreateWindow(int width, int height, byte[] title, Monitor monitor, GlfwWindow share);
 
         /// <summary>
         ///     This function destroys the specified window and its context. On calling this function, no further callbacks will be
         ///     called for that window.
         ///     <para>If the context of the specified window is current on the main thread, it is detached before being destroyed.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwDestroyWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void DestroyWindow(Window window);
+        public static extern void DestroyWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function makes the specified window visible if it was previously hidden. If the window is already visible or
         ///     is in full screen mode, this function does nothing.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwShowWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ShowWindow(Window window);
+        public static extern void ShowWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function hides the specified window if it was previously visible. If the window is already hidden or is in
         ///     full screen mode, this function does nothing.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwHideWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void HideWindow(Window window);
+        public static extern void HideWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function retrieves the position, in screen coordinates, of the upper-left corner of the client area of the
         ///     specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="x">The x-coordinate of the upper-left corner of the client area.</param>
         /// <param name="y">The y-coordinate of the upper-left corner of the client area.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowPos", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetWindowPosition(Window window, out int x, out int y);
+        public static extern void GetWindowPosition(GlfwWindow glfwWindow, out int x, out int y);
 
         /// <summary>
         ///     Sets the position, in screen coordinates, of the upper-left corner of the client area of the
@@ -563,7 +563,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     Do not use this function to move an already visible window unless you have very good reasons for
         ///     doing so, as it will confuse and annoy the user.
         /// </note>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="x">The x-coordinate of the upper-left corner of the client area.</param>
         /// <param name="y">The y-coordinate of the upper-left corner of the client area.</param>
         /// <remarks>
@@ -571,7 +571,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     limits.
         /// </remarks>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowPos", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowPosition(Window window, int x, int y);
+        public static extern void SetWindowPosition(GlfwWindow glfwWindow, int x, int y);
 
         /// <summary>
         ///     This function retrieves the size, in screen coordinates, of the client area of the specified window.
@@ -580,11 +580,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         <see cref="GetFramebufferSize" />.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="width">The width, in screen coordinates.</param>
         /// <param name="height">The height, in screen coordinates.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowSize", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetWindowSize(Window window, out int width, out int height);
+        public static extern void GetWindowSize(GlfwWindow glfwWindow, out int width, out int height);
 
         /// <summary>
         ///     Sets the size, in screen coordinates, of the client area of the specified window.
@@ -594,61 +594,61 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         of the framebuffer remain unchanged.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="width">The desired width, in screen coordinates, of the window client area.</param>
         /// <param name="height">The desired height, in screen coordinates, of the window client area.</param>
         /// <remarks>The window manager may put limits on what sizes are allowed. GLFW cannot and should not override these limits.</remarks>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowSize", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowSize(Window window, int width, int height);
+        public static extern void SetWindowSize(GlfwWindow glfwWindow, int width, int height);
 
         /// <summary>
         ///     This function retrieves the size, in pixels, of the framebuffer of the specified window.
         ///     <para>If you wish to retrieve the size of the window in screen coordinates, use <see cref="GetWindowSize" />.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="width">The width, in pixels, of the framebuffer.</param>
         /// <param name="height">The height, in pixels, of the framebuffer.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwGetFramebufferSize", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetFramebufferSize(Window window, out int width, out int height);
+        public static extern void GetFramebufferSize(GlfwWindow glfwWindow, out int width, out int height);
 
         /// <summary>
         ///     Sets the position callback of the specified window, which is called when the window is moved.
         ///     <para>The callback is provided with the screen position of the upper-left corner of the client area of the window.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="positionCallback">The position callback to be invoked on position changes.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowPosCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(PositionCallback))]
-        public static extern PositionCallback SetWindowPositionCallback(Window window,
+        public static extern PositionCallback SetWindowPositionCallback(GlfwWindow glfwWindow,
             PositionCallback positionCallback);
 
         /// <summary>
         ///     Sets the size callback of the specified window, which is called when the window is resized.
         ///     <para>The callback is provided with the size, in screen coordinates, of the client area of the window.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="sizeCallback">The size callback to be invoked on size changes.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowSizeCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(SizeCallback))]
-        public static extern SizeCallback SetWindowSizeCallback(Window window, SizeCallback sizeCallback);
+        public static extern SizeCallback SetWindowSizeCallback(GlfwWindow glfwWindow, SizeCallback sizeCallback);
 
         /// <summary>
         ///     Sets the window title, encoded as UTF-8, of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="title">The title as an array of UTF-8 encoded bytes.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowTitle", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void SetWindowTitle(Window window, byte[] title);
+        private static extern void SetWindowTitle(GlfwWindow glfwWindow, byte[] title);
 
         /// <summary>
         ///     This function brings the specified window to front and sets input focus. The window should already be visible and
         ///     not iconified.
         /// </summary>
-        /// <param name="window">The window.</param>
+        /// <param name="glfwWindow">The window.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwFocusWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void FocusWindow(Window window);
+        public static extern void FocusWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Sets the focus callback of the specified window, which is called when the window gains or loses input
@@ -658,11 +658,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         events will be generated for all such that had been pressed.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="focusCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowFocusCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(FocusCallback))]
-        public static extern FocusCallback SetWindowFocusCallback(Window window, FocusCallback focusCallback);
+        public static extern FocusCallback SetWindowFocusCallback(GlfwWindow glfwWindow, FocusCallback focusCallback);
 
         /// <summary>
         ///     This function retrieves the major, minor and revision numbers of the GLFW library.
@@ -710,13 +710,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         coordinate axis, the retrieved values will always be zero or positive.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="left">The size, in screen coordinates, of the left edge of the window frame</param>
         /// <param name="top">The size, in screen coordinates, of the top edge of the window frame</param>
         /// <param name="right">The size, in screen coordinates, of the right edge of the window frame.</param>
         /// <param name="bottom">The size, in screen coordinates, of the bottom edge of the window frame</param>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowFrameSize", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetWindowFrameSize(Window window, out int left, out int top, out int right,
+        public static extern void GetWindowFrameSize(GlfwWindow glfwWindow, out int left, out int top, out int right,
             out int bottom);
 
         /// <summary>
@@ -724,17 +724,17 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     maximized, this function does nothing.
         ///     <para>If the specified window is a full screen window, this function does nothing.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwMaximizeWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void MaximizeWindow(Window window);
+        public static extern void MaximizeWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function iconifies (minimizes) the specified window if it was previously restored.
         ///     <para>If the window is already iconified, this function does nothing.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwIconifyWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void IconifyWindow(Window window);
+        public static extern void IconifyWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function restores the specified window if it was previously iconified (minimized) or maximized.
@@ -744,9 +744,9 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         selected monitor.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwRestoreWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void RestoreWindow(Window window);
+        public static extern void RestoreWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function makes the OpenGL or OpenGL ES context of the specified window current on the calling thread.
@@ -756,9 +756,9 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     </para>
         ///     <para>By default, making a context non-current implicitly forces a pipeline flush.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwMakeContextCurrent", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void MakeContextCurrent(Window window);
+        public static extern void MakeContextCurrent(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     This function swaps the front and back buffers of the specified window when rendering with OpenGL or OpenGL ES.
@@ -768,9 +768,9 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     </para>
         ///     <para>This function does not apply to Vulkan.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSwapBuffers", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SwapBuffers(Window window);
+        public static extern void SwapBuffers(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Sets the swap interval for the current OpenGL or OpenGL ES context, i.e. the number of screen updates
@@ -810,19 +810,19 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the value of the close flag of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns><c>true</c> if close flag is present; otherwise <c>false</c>.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwWindowShouldClose", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool WindowShouldClose(Window window);
+        public static extern bool WindowShouldClose(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Sets the value of the close flag of the specified window.
         ///     <para>This can be used to override the user's attempt to close the window, or to signal that it should be closed.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="close"><c>true</c> to set close flag, or <c>false</c> to cancel flag.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowShouldClose", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowShouldClose(Window window, bool close);
+        public static extern void SetWindowShouldClose(GlfwWindow glfwWindow, bool close);
 
         /// <summary>
         ///     Sets the icon of the specified window. If passed an array of candidate images, those of or closest to
@@ -832,11 +832,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         rescaled as needed. Good sizes include 16x16, 32x32 and 48x48.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="count">The number of images in <paramref name="images" />.</param>
         /// <param name="images">An array of icon images.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowIcon", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowIcon(Window window, int count, Image[] images);
+        public static extern void SetWindowIcon(GlfwWindow glfwWindow, int count, Image[] images);
 
         /// <summary>
         ///     This function puts the calling thread to sleep until at least one event is available in the event queue. Once one
@@ -903,12 +903,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     Sets the close callback of the specified window, which is called when the user attempts to close the
         ///     window, for example by clicking the close widget in the title bar.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="closeCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowCloseCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(WindowCallback))]
-        public static extern WindowCallback SetCloseCallback(Window window, WindowCallback closeCallback);
+        public static extern WindowCallback SetCloseCallback(GlfwWindow glfwWindow, WindowCallback closeCallback);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetPrimaryMonitor", CallingConvention = CallingConvention.Cdecl)]
         private static extern Monitor GetPrimaryMonitor();
@@ -922,10 +922,10 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the handle of the monitor that the specified window is in full screen on.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The monitor, or <see cref="Monitor.None" /> if the window is in windowed mode or an error occurred.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowMonitor", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Monitor GetWindowMonitor(Window window);
+        public static extern Monitor GetWindowMonitor(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Sets the monitor that the window uses for full screen mode or, if the monitor is
@@ -947,7 +947,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         settings such as whether it is decorated, floating, resizable, has size or aspect ratio limits, etc..
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="monitor">The desired monitor, or <see cref="Monitor.None" /> to set windowed mode.</param>
         /// <param name="x">The desired x-coordinate of the upper-left corner of the client area.</param>
         /// <param name="y">The desired y-coordinate of the upper-left corner of the client area.</param>
@@ -955,7 +955,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="height">The desired height, in screen coordinates, of the client area or video mode.</param>
         /// <param name="refreshRate">The desired refresh rate, in Hz, of the video mode, or <see cref="Constants.Default" />.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowMonitor", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowMonitor(Window window, Monitor monitor, int x, int y, int width, int height,
+        public static extern void SetWindowMonitor(GlfwWindow glfwWindow, Monitor monitor, int x, int y, int width, int height,
             int refreshRate);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetGammaRamp", CallingConvention = CallingConvention.Cdecl)]
@@ -985,10 +985,10 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         public static extern void SetGamma(Monitor monitor, float gamma);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetClipboardString", CallingConvention = CallingConvention.Cdecl)]
-        private static extern IntPtr GetClipboardStringInternal(Window window);
+        private static extern IntPtr GetClipboardStringInternal(GlfwWindow glfwWindow);
 
         [DllImport(LIBRARY, EntryPoint = "glfwSetClipboardString", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void SetClipboardString(Window window, byte[] bytes);
+        private static extern void SetClipboardString(GlfwWindow glfwWindow, byte[] bytes);
 
         /// <summary>
         ///     Sets the file drop callback of the specified window, which is called when one or more dragged files
@@ -999,12 +999,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         need to make a deep copy.
         ///     </para>
         /// </summary>
-        /// <param name="window">The window whose callback to set.</param>
+        /// <param name="glfwWindow">The window whose callback to set.</param>
         /// <param name="dropCallback">The new file drop callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetDropCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(FileDropCallback))]
-        public static extern FileDropCallback SetDropCallback(Window window, FileDropCallback dropCallback);
+        public static extern FileDropCallback SetDropCallback(GlfwWindow glfwWindow, FileDropCallback dropCallback);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetMonitorName", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetMonitorNameInternal(Monitor monitor);
@@ -1043,10 +1043,10 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     Sets the cursor image to be used when the cursor is over the client area of the specified window.
         ///     <para>The set cursor will only be visible when the cursor mode of the window is <see cref="CursorMode.Normal" />.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="cursor">The cursor to set, or <see cref="Cursor.None" /> to switch back to the default arrow cursor.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCursor", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetCursor(Window window, Cursor cursor);
+        public static extern void SetCursor(GlfwWindow glfwWindow, Cursor cursor);
 
         /// <summary>
         ///     Returns a cursor with a standard shape, that can be set for a window with <see cref="SetCursor" />.
@@ -1068,11 +1068,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         integer type works for positive coordinates, but fails for negative ones.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="x">The cursor x-coordinate, relative to the left edge of the client area.</param>
         /// <param name="y">The cursor y-coordinate, relative to the left edge of the client area.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwGetCursorPos", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GetCursorPosition(Window window, out double x, out double y);
+        public static extern void GetCursorPosition(GlfwWindow glfwWindow, out double x, out double y);
 
         /// <summary>
         ///     Sets the position, in screen coordinates, of the cursor relative to the upper-left corner of the
@@ -1083,11 +1083,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         maximum values of a <see cref="double" />.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="x">The desired x-coordinate, relative to the left edge of the client area.</param>
         /// <param name="y">The desired y-coordinate, relative to the left edge of the client area.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCursorPos", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetCursorPosition(Window window, double x, double y);
+        public static extern void SetCursorPosition(GlfwWindow glfwWindow, double x, double y);
 
         /// <summary>
         ///     Sets the cursor position callback of the specified window, which is called when the cursor is moved.
@@ -1096,23 +1096,23 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         client area of the window.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mouseCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or<c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCursorPosCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(MouseCallback))]
-        public static extern MouseCallback SetCursorPositionCallback(Window window, MouseCallback mouseCallback);
+        public static extern MouseCallback SetCursorPositionCallback(GlfwWindow glfwWindow, MouseCallback mouseCallback);
 
         /// <summary>
         ///     Sets the cursor boundary crossing callback of the specified window, which is called when the cursor
         ///     enters or leaves the client area of the window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mouseCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCursorEnterCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(MouseEnterCallback))]
-        public static extern MouseEnterCallback SetCursorEnterCallback(Window window, MouseEnterCallback mouseCallback);
+        public static extern MouseEnterCallback SetCursorEnterCallback(GlfwWindow glfwWindow, MouseEnterCallback mouseCallback);
 
         /// <summary>
         ///     Sets the mouse button callback of the specified window, which is called when a mouse button is
@@ -1123,12 +1123,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         after the focus loss event has been processed, i.e. after the window focus callback has been called.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mouseCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetMouseButtonCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(MouseButtonCallback))]
-        public static extern MouseButtonCallback SetMouseButtonCallback(Window window,
+        public static extern MouseButtonCallback SetMouseButtonCallback(GlfwWindow glfwWindow,
             MouseButtonCallback mouseCallback);
 
         /// <summary>
@@ -1136,12 +1136,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     such as a mouse wheel or scrolling area of a touchpad.
         ///     <para>The scroll callback receives all scrolling input, like that from a mouse wheel or a touchpad scrolling area.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mouseCallback">	The new scroll callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetScrollCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(MouseCallback))]
-        public static extern MouseCallback SetScrollCallback(Window window, MouseCallback mouseCallback);
+        public static extern MouseCallback SetScrollCallback(GlfwWindow glfwWindow, MouseCallback mouseCallback);
 
         /// <summary>
         ///     Gets the last state reported for the specified mouse button to the specified window.
@@ -1151,29 +1151,29 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         mouse button has already been released.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="button">The desired mouse button.</param>
         /// <returns>The input state of the <paramref name="button" />.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetMouseButton", CallingConvention = CallingConvention.Cdecl)]
-        public static extern InputState GetMouseButton(Window window, MouseButton button);
+        public static extern InputState GetMouseButton(GlfwWindow glfwWindow, MouseButton button);
 
         /// <summary>
         ///     Sets the user-defined pointer of the specified window. The current value is retained until the window
         ///     is destroyed. The initial value is <see cref="IntPtr.Zero" />.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="userPointer">The user pointer value.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowUserPointer", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowUserPointer(Window window, IntPtr userPointer);
+        public static extern void SetWindowUserPointer(GlfwWindow glfwWindow, IntPtr userPointer);
 
         /// <summary>
         ///     Gets the current value of the user-defined pointer of the specified window. The initial value is
         ///     <see cref="IntPtr.Zero" />.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The user-defined pointer.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowUserPointer", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetWindowUserPointer(Window window);
+        public static extern IntPtr GetWindowUserPointer(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Sets the size limits of the client area of the specified window. If the window is full screen, the
@@ -1184,13 +1184,13 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         or equal to zero.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="minWidth">The minimum width of the client area.</param>
         /// <param name="minHeight">The minimum height of the client area.</param>
         /// <param name="maxWidth">The maximum width of the client area.</param>
         /// <param name="maxHeight">The maximum height of the client area.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowSizeLimits", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowSizeLimits(Window window, int minWidth, int minHeight, int maxWidth,
+        public static extern void SetWindowSizeLimits(GlfwWindow glfwWindow, int minWidth, int minHeight, int maxWidth,
             int maxHeight);
 
         /// <summary>
@@ -1207,14 +1207,14 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     </para>
         ///     <para>The aspect ratio is applied immediately to a windowed mode window and may cause it to be resized.</para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="numerator">The numerator of the desired aspect ratio.</param>
         /// <param name="denominator">The denominator of the desired aspect ratio.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowAspectRatio", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetWindowAspectRatio(Window window, int numerator, int denominator);
+        public static extern void SetWindowAspectRatio(GlfwWindow glfwWindow, int numerator, int denominator);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetCurrentContext", CallingConvention = CallingConvention.Cdecl)]
-        private static extern Window GetCurrentContext();
+        private static extern GlfwWindow GetCurrentContext();
 
         /// <summary>
         ///     Gets the size, in millimeters, of the display area of the specified monitor.
@@ -1252,12 +1252,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         Alt key on Windows. There is a character with modifiers callback that receives these events.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="charCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCharCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(CharCallback))]
-        public static extern CharCallback SetCharCallback(Window window, CharCallback charCallback);
+        public static extern CharCallback SetCharCallback(GlfwWindow glfwWindow, CharCallback charCallback);
 
         /// <summary>
         ///     Sets the character with modifiers callback of the specified window, which is called when a Unicode
@@ -1270,12 +1270,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         physical key was pressed or released, see the key callback instead.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="charCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or an error occurred.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetCharModsCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(CharModsCallback))]
-        public static extern CharModsCallback SetCharModsCallback(Window window, CharModsCallback charCallback);
+        public static extern CharModsCallback SetCharModsCallback(GlfwWindow glfwWindow, CharModsCallback charCallback);
 
         /// <summary>
         ///     Gets the last state reported for the specified key to the specified window.
@@ -1289,11 +1289,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         layout. If you want to input text, use the Unicode character callback instead.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="key">The key to query.</param>
         /// <returns>Either <see cref="InputState.Press" /> or <see cref="InputState.Release" />.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetKey", CallingConvention = CallingConvention.Cdecl)]
-        public static extern InputState GetKey(Window window, Keys key);
+        public static extern InputState GetKey(GlfwWindow glfwWindow, Keys key);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetKeyName", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetKeyNameInternal(Keys key, int scanCode);
@@ -1302,12 +1302,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     Sets the framebuffer resize callback of the specified window, which is called when the framebuffer of
         ///     the specified window is resized.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="sizeCallback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetFramebufferSizeCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(SizeCallback))]
-        public static extern SizeCallback SetFramebufferSizeCallback(Window window, SizeCallback sizeCallback);
+        public static extern SizeCallback SetFramebufferSizeCallback(GlfwWindow glfwWindow, SizeCallback sizeCallback);
 
         /// <summary>
         ///     Sets the refresh callback of the specified window, which is called when the client area of the window
@@ -1317,12 +1317,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///         this callback may be called only very infrequently or never at all.
         ///     </para>
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowRefreshCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(WindowCallback))]
-        public static extern WindowCallback SetWindowRefreshCallback(Window window, WindowCallback callback);
+        public static extern WindowCallback SetWindowRefreshCallback(GlfwWindow glfwWindow, WindowCallback callback);
 
         /// <summary>
         ///     Sets the key callback of the specified window, which is called when a key is pressed, repeated or
@@ -1343,12 +1343,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     </para>
         ///     <para>Sometimes GLFW needs to generate synthetic key events, in which case the scancode may be zero.</para>
         /// </summary>
-        /// <param name="window">The new key callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <param name="glfwWindow">The new key callback, or <c>null</c> to remove the currently set callback.</param>
         /// <param name="keyCallback">The key callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetKeyCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(KeyCallback))]
-        public static extern KeyCallback SetKeyCallback(Window window, KeyCallback keyCallback);
+        public static extern KeyCallback SetKeyCallback(GlfwWindow glfwWindow, KeyCallback keyCallback);
 
         /// <summary>
         ///     Gets whether the specified joystick is present.
@@ -1392,30 +1392,30 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         ///     Sets the iconification callback of the specified window, which is called when the window is iconified
         ///     or restored.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
         /// <returns>The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwSetWindowIconifyCallback", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.FunctionPtr, MarshalTypeRef = typeof(IconifyCallback))]
-        public static extern IconifyCallback SetWindowIconifyCallback(Window window, IconifyCallback callback);
+        public static extern IconifyCallback SetWindowIconifyCallback(GlfwWindow glfwWindow, IconifyCallback callback);
 
         /// <summary>
         ///     Sets an input mode option for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mode">The mode to set a new value for.</param>
         /// <param name="value">The new value of the specified input mode.</param>
         [DllImport(LIBRARY, EntryPoint = "glfwSetInputMode", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void SetInputMode(Window window, InputMode mode, int value);
+        public static extern void SetInputMode(GlfwWindow glfwWindow, InputMode mode, int value);
 
         /// <summary>
         ///     Gets the value of an input option for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="mode">The mode to query.</param>
         /// <returns>Dependent on mode being queried.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetInputMode", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetInputMode(Window window, InputMode mode);
+        public static extern int GetInputMode(GlfwWindow glfwWindow, InputMode mode);
 
         /// <summary>
         ///     Returns the position, in screen coordinates, of the upper-left corner of the work area of the specified
@@ -1456,11 +1456,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the value of the specified window attribute.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="attribute">The attribute to retrieve.</param>
         /// <returns>The value of the <paramref name="attribute" />.</returns>
         [DllImport(LIBRARY, EntryPoint = "glfwGetWindowAttrib", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int GetWindowAttribute(Window window, int attribute);
+        private static extern int GetWindowAttribute(GlfwWindow glfwWindow, int attribute);
 
         [DllImport(LIBRARY, EntryPoint = "glfwGetError", CallingConvention = CallingConvention.Cdecl)]
         private static extern ErrorCode GetErrorPrivate(out IntPtr description);
@@ -1478,11 +1478,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="title">The initial window title.</param>
         /// <param name="monitor">The monitor to use for full screen mode, or <see cref="Monitor.None" /> for windowed mode.</param>
         /// <param name="share">
-        ///     A window instance whose context to share resources with, or <see cref="Window.None" /> to not share
+        ///     A window instance whose context to share resources with, or <see cref="GlfwWindow.None" /> to not share
         ///     resources..
         /// </param>
-        /// <returns>The created window, or <see cref="Window.None" /> if an error occurred.</returns>
-        public static Window CreateWindow(int width, int height, [NotNull] string title, Monitor monitor, Window share)
+        /// <returns>The created window, or <see cref="GlfwWindow.None" /> if an error occurred.</returns>
+        public static GlfwWindow CreateWindow(int width, int height, [NotNull] string title, Monitor monitor, GlfwWindow share)
         {
             return CreateWindow(width, height, Encoding.UTF8.GetBytes(title), monitor, share);
         }
@@ -1490,43 +1490,43 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the client API.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The client API.</returns>
-        public static ClientApi GetClientApi(Window window)
+        public static ClientApi GetClientApi(GlfwWindow glfwWindow)
         {
-            return (ClientApi) GetWindowAttribute(window, (int) ContextAttributes.ClientApi);
+            return (ClientApi) GetWindowAttribute(glfwWindow, (int) ContextAttributes.ClientApi);
         }
 
         /// <summary>
         ///     Gets the contents of the system clipboard, if it contains or is convertible to a UTF-8 encoded
         ///     string.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The contents of the clipboard as a UTF-8 encoded string, or <c>null</c> if an error occurred.</returns>
         [NotNull]
-        public static string GetClipboardString(Window window)
+        public static string GetClipboardString(GlfwWindow glfwWindow)
         {
-            return Util.PtrToStringUTF8(GetClipboardStringInternal(window));
+            return Util.PtrToStringUTF8(GetClipboardStringInternal(glfwWindow));
         }
 
         /// <summary>
         ///     Gets the API used to create the context of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The API used to create the context.</returns>
-        public static ContextApi GetContextCreationApi(Window window)
+        public static ContextApi GetContextCreationApi(GlfwWindow glfwWindow)
         {
-            return (ContextApi) GetWindowAttribute(window, (int) ContextAttributes.ContextCreationApi);
+            return (ContextApi) GetWindowAttribute(glfwWindow, (int) ContextAttributes.ContextCreationApi);
         }
 
         /// <summary>
         ///     Gets the context version of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The context version.</returns>
-        public static Version GetContextVersion(Window window)
+        public static Version GetContextVersion(GlfwWindow glfwWindow)
         {
-            GetContextVersion(window, out var major, out var minor, out var revision);
+            GetContextVersion(glfwWindow, out var major, out var minor, out var revision);
             return new Version(major, minor, revision);
         }
 
@@ -1554,21 +1554,21 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets value indicating if specified window is using a debug context.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns><c>true</c> if window context is debug context, otherwise <c>false</c>.</returns>
-        public static bool GetIsDebugContext(Window window)
+        public static bool GetIsDebugContext(GlfwWindow glfwWindow)
         {
-            return GetWindowAttribute(window, (int) ContextAttributes.OpenglDebugContext) == (int) Constants.True;
+            return GetWindowAttribute(glfwWindow, (int) ContextAttributes.OpenglDebugContext) == (int) Constants.True;
         }
 
         /// <summary>
         ///     Gets value indicating if specified window is using a forward compatible context.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns><c>true</c> if window context is forward compatible, otherwise <c>false</c>.</returns>
-        public static bool GetIsForwardCompatible(Window window)
+        public static bool GetIsForwardCompatible(GlfwWindow glfwWindow)
         {
-            return GetWindowAttribute(window, (int) ContextAttributes.OpenglForwardCompat) == (int) Constants.True;
+            return GetWindowAttribute(glfwWindow, (int) ContextAttributes.OpenglForwardCompat) == (int) Constants.True;
         }
 
         /// <summary>
@@ -1665,21 +1665,21 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the profile of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>Profile of the window.</returns>
-        public static Profile GetProfile(Window window)
+        public static Profile GetProfile(GlfwWindow glfwWindow)
         {
-            return (Profile) GetWindowAttribute(window, (int) ContextAttributes.OpenglProfile);
+            return (Profile) GetWindowAttribute(glfwWindow, (int) ContextAttributes.OpenglProfile);
         }
 
         /// <summary>
         ///     Gets the robustness value of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>Current set value of the robustness.</returns>
-        public static Robustness GetRobustness(Window window)
+        public static Robustness GetRobustness(GlfwWindow glfwWindow)
         {
-            return (Robustness) GetWindowAttribute(window, (int) ContextAttributes.ContextRobustness);
+            return (Robustness) GetWindowAttribute(glfwWindow, (int) ContextAttributes.ContextRobustness);
         }
 
         /// <summary>
@@ -1718,32 +1718,32 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Gets the value of an attribute of the specified window or its OpenGL or OpenGL ES context.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="attribute">The window attribute whose value to return.</param>
         /// <returns>The value of the attribute, or zero if an error occurred.</returns>
-        public static bool GetWindowAttribute(Window window, WindowAttribute attribute)
+        public static bool GetWindowAttribute(GlfwWindow glfwWindow, WindowAttribute attribute)
         {
-            return GetWindowAttribute(window, (int) attribute) == (int) Constants.True;
+            return GetWindowAttribute(glfwWindow, (int) attribute) == (int) Constants.True;
         }
 
         /// <summary>
         ///     Sets the system clipboard to the specified string.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="str">The string to set to the clipboard.</param>
-        public static void SetClipboardString(Window window, string str)
+        public static void SetClipboardString(GlfwWindow glfwWindow, string str)
         {
-            SetClipboardString(window, Encoding.UTF8.GetBytes(str));
+            SetClipboardString(glfwWindow, Encoding.UTF8.GetBytes(str));
         }
 
         /// <summary>
         ///     Sets the window title, encoded as UTF-8, of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <param name="title">The title to set.</param>
-        public static void SetWindowTitle(Window window, string title)
+        public static void SetWindowTitle(GlfwWindow glfwWindow, string title)
         {
-            SetWindowTitle(window, Encoding.UTF8.GetBytes(title));
+            SetWindowTitle(glfwWindow, Encoding.UTF8.GetBytes(title));
         }
 
         /// <summary>
@@ -1847,11 +1847,11 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <param name="value">The value.</param>
         public static void WindowHint(Hint hint, ReleaseBehavior value) { WindowHint(hint, (int) value); }
 
-        private static void GetContextVersion(Window window, out int major, out int minor, out int revision)
+        private static void GetContextVersion(GlfwWindow glfwWindow, out int major, out int minor, out int revision)
         {
-            major = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionMajor);
-            minor = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionMinor);
-            revision = GetWindowAttribute(window, (int) ContextAttributes.ContextVersionRevision);
+            major = GetWindowAttribute(glfwWindow, (int) ContextAttributes.ContextVersionMajor);
+            minor = GetWindowAttribute(glfwWindow, (int) ContextAttributes.ContextVersionMinor);
+            revision = GetWindowAttribute(glfwWindow, (int) ContextAttributes.ContextVersionRevision);
         }
 
         private static void GlfwError(ErrorCode code, IntPtr message)

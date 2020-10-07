@@ -57,26 +57,26 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Returns the pointer to the Wayland window for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>A pointer to a Wayland window, or <see cref="IntPtr.Zero" /> if error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetWaylandWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetWaylandWindow(Window window);
+        public static extern IntPtr GetWaylandWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the pointer to the GLX window for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>A pointer to a GLX window, or <see cref="IntPtr.Zero" /> if error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetGLXWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetGLXWindow(Window window);
+        public static extern IntPtr GetGLXWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the pointer to the X11 window for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>A pointer to an X11 window, or <see cref="IntPtr.Zero" /> if error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetX11Window", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetX11Window(Window window);
+        public static extern IntPtr GetX11Window(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the RROutput of the specified monitor.
@@ -97,42 +97,42 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Returns the pointer to the Cocoa window for the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>A pointer to a Cocoa window, or <see cref="IntPtr.Zero" /> if error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetCocoaWindow", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetCocoaWindow(Window window);
+        public static extern IntPtr GetCocoaWindow(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the NSOpenGLContext of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The NSOpenGLContext of the specified window, or <see cref="NSOpenGLContext.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetNSGLContext", CallingConvention = CallingConvention.Cdecl)]
-        public static extern NSOpenGLContext GetNSGLContext(Window window);
+        public static extern NSOpenGLContext GetNSGLContext(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the OSMesaContext of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The OSMesaContext of the specified window, or <see cref="OSMesaContext.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetOSMesaContext", CallingConvention = CallingConvention.Cdecl)]
-        public static extern OSMesaContext GetOSMesaContext(Window window);
+        public static extern OSMesaContext GetOSMesaContext(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the GLXContext of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The GLXContext of the specified window, or <see cref="GLXContext.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetGLXContext", CallingConvention = CallingConvention.Cdecl)]
-        public static extern GLXContext GetGLXContext(Window window);
+        public static extern GLXContext GetGLXContext(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the EGLContext of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The EGLContext of the specified window, or <see cref="EGLContext.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetEGLContext", CallingConvention = CallingConvention.Cdecl)]
-        public static extern EGLContext GetEglContext(Window window);
+        public static extern EGLContext GetEglContext(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the EGLDisplay used by GLFW.
@@ -144,26 +144,26 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Returns the <see cref="EGLSurface" /> of the specified window
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The EGLSurface of the specified window, or <see cref="EGLSurface.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetEGLSurface", CallingConvention = CallingConvention.Cdecl)]
-        public static extern EGLSurface GetEglSurface(Window window);
+        public static extern EGLSurface GetEglSurface(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the WGL context of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The WGL context of the specified window, or <see cref="EGLContext.None" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetWGLContext", CallingConvention = CallingConvention.Cdecl)]
-        public static extern HGLRC GetWglContext(Window window);
+        public static extern HGLRC GetWglContext(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the HWND of the specified window.
         /// </summary>
-        /// <param name="window">A window instance.</param>
+        /// <param name="glfwWindow">A window instance.</param>
         /// <returns>The HWND of the specified window, or <see cref="IntPtr.Zero" /> if an error occurred.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetWin32Window", CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr GetWin32Window(Window window);
+        public static extern IntPtr GetWin32Window(GlfwWindow glfwWindow);
 
         /// <summary>
         ///     Returns the contents of the selection as a string.
@@ -188,7 +188,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <summary>
         ///     Retrieves the color buffer associated with the specified window.
         /// </summary>
-        /// <param name="window">The window whose color buffer to retrieve.</param>
+        /// <param name="glfwWindow">The window whose color buffer to retrieve.</param>
         /// <param name="width">The width of the color buffer.</param>
         /// <param name="height">The height of the color buffer.</param>
         /// <param name="format">The pixel format of the color buffer.</param>
@@ -196,12 +196,12 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <returns><c>true</c> if operation was successful, otherwise <c>false</c>.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetOSMesaColorBuffer", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool
-            GetOSMesaColorBuffer(Window window, out int width, out int height, out int format, out IntPtr buffer);
+            GetOSMesaColorBuffer(GlfwWindow glfwWindow, out int width, out int height, out int format, out IntPtr buffer);
 
         /// <summary>
         ///     Retrieves the depth buffer associated with the specified window.
         /// </summary>
-        /// <param name="window">The window whose depth buffer to retrieve.</param>
+        /// <param name="glfwWindow">The window whose depth buffer to retrieve.</param>
         /// <param name="width">The width of the depth buffer.</param>
         /// <param name="height">The height of the depth buffer.</param>
         /// <param name="bytesPerValue">The number of bytes per element in the buffer.</param>
@@ -209,7 +209,7 @@ namespace Pulsar.Contexts.GlfwSharp.Binding
         /// <returns><c>true</c> if operation was successful, otherwise <c>false</c>.</returns>
         [DllImport(Glfw.LIBRARY, EntryPoint = "glfwGetOSMesaDepthBuffer", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool
-            GetOSMesaDepthBuffer(Window window, out int width, out int height, out int bytesPerValue,
+            GetOSMesaDepthBuffer(GlfwWindow glfwWindow, out int width, out int height, out int bytesPerValue,
                 out IntPtr buffer);
 
 
