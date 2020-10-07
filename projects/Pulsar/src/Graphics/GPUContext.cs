@@ -46,7 +46,7 @@ namespace Pulsar.Graphics
             _textures.Remove(shader);
         }
 
-        public GPUShaderProgram CreateShaderProgram(GPUShader vertex, GPUShader fragment, GPUShader geometry, GPUShader tessEval, GPUShader tessCtrl)
+        public GPUShaderProgram CreateShaderProgram(GPUShader vertex, GPUShader fragment, GPUShader geometry = null, GPUShader tessEval = null, GPUShader tessCtrl = null)
         {
             GPUShaderProgram sProgram = new GPUShaderProgram(Gl.glCreateProgram());
             
@@ -206,6 +206,12 @@ namespace Pulsar.Graphics
                 Gl.glBindFramebuffer(Gl.GL_FRAMEBUFFER, fb);
                 _currentFramebuffer = fb;
             }
+        }
+
+        public void ClearFramebuffer(GPUFramebuffer fb, BufferMasks mask)
+        {
+            BindFramebuffer(fb);
+            Gl.glClear((uint)mask);
         }
     }
 }
