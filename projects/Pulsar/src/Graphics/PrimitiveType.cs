@@ -2,7 +2,7 @@
 
 namespace Pulsar.Graphics
 {
-    public enum DrawModes
+    public enum PrimitiveType
     {
         Triangles = Gl.GL_TRIANGLES,
         TrianglesStrip,

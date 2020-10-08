@@ -1,9 +1,7 @@
 ﻿namespace Pulsar.Graphics
 {
-    public struct GPUDrawCommand
+    public interface GPUDrawCommand
     {
-        public DrawModes Mode;
-        public uint VertexCount;
-        public uint FirstVertex;
+        void Draw();
     }
 }
