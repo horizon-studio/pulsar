@@ -1,5 +1,4 @@
 ﻿using System;
-using Pulsar.Contexts;
 using Pulsar.Contexts.GlfwSharp.Binding;
 using Pulsar.Contexts.OpenGL;
 using Pulsar.Graphics;
@@ -8,7 +7,7 @@ namespace Pulsar.Application
 {
     public class ApplicationHost : IDisposable
     {
-        private Pulsar.Application.Application _application;
+        private Application _application;
         private long _now;
         private long _lastUpdate;
         private int _updatesCount;
