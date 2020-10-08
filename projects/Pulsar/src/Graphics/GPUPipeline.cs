@@ -51,7 +51,7 @@ namespace Pulsar.Graphics
             }
             _context.BindShaderProgram(_program);
             _context.BindFormat(_format);
-            Gl.glDrawArrays((int)command.Mode, (int)command.FirstVertex, (int)command.VertexCount);
+            command.Draw();
         }
     }
 }
