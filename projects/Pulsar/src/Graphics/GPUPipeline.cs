@@ -8,14 +8,14 @@ namespace Pulsar.Graphics
 {
     public class GPUPipeline
     {
-        private GPUContext _context;
+        private GPUEngine _engine;
         private GPUShaderProgram _program;
         private GPUPipelineFormat _format;
         private GPUBuffer[] _buffers;
 
-        public GPUPipeline(GPUContext context, GPUShaderProgram shaderProgram, GPUPipelineFormat format, GPUBuffer[] buffers)
+        public GPUPipeline(GPUEngine engine, GPUShaderProgram shaderProgram, GPUPipelineFormat format, GPUBuffer[] buffers)
         {
-            _context = context;
+            _engine = engine;
             _program = shaderProgram;
             _format = format;
             _buffers = buffers;
@@ -38,7 +38,7 @@ namespace Pulsar.Graphics
 
         public void SetUniform(string name, Matrix mat)
         {
-            _context.BindShaderProgram(_program);
+            _engine.BindShaderProgram(_program);
             Gl.glUniformMatrix4fv(Gl.glGetUniformLocation(_program, name), 1, false, mat.ToArray());    
         }
         
@@ -56,9 +56,9 @@ namespace Pulsar.Graphics
                 GPUBufferFormat bf = _format.GetBufferFormats()[i];
                 Gl.glVertexArrayVertexBuffer(_format, bf.BufferIndex, _buffers[i], bf.Offset, (int)bf.Stride);
             }*/
-            _context.BindShaderProgram(_program);
-            _context.BindFormat(_format);
-            _context.ReadErrors();
+            _engine.BindShaderProgram(_program);
+            _engine.BindFormat(_format);
+            _engine.ReadErrors();
             command.Draw();
         }
     }

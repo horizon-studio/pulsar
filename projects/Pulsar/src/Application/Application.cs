@@ -8,7 +8,7 @@ namespace Pulsar.Application
     {
         protected ApplicationHost AppHost;
         protected Window Window;
-        protected GPUContext _gpuContext;
+        protected GPUEngine _gpuEngine;
         private uint _swapInterval = 0;
         public uint SwapInterval
         {
@@ -45,9 +45,9 @@ namespace Pulsar.Application
             Window = w;
         }
 
-        public void SetGPUContext(GPUContext c)
+        public void SetGPUEngine(GPUEngine engine)
         {
-            _gpuContext = c;
+            _gpuEngine = engine;
         }
     }
 }

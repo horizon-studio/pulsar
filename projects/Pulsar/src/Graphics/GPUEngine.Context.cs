@@ -6,7 +6,7 @@ using Pulsar.Contexts.OpenGL;
 
 namespace Pulsar.Graphics
 {
-    public class GPUContext
+    public partial class GPUEngine
     {
         private List<GPUBuffer> _buffers = new List<GPUBuffer>();
         private List<uint> _textures = new List<uint>();

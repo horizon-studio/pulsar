@@ -39,7 +39,7 @@ namespace Pulsar.Application
             _window.MakeCurrent();
             Gl.Init(Glfw.GetProcAddress);
             _application.SetWindow(_window);
-            _application.SetGPUContext(new GPUContext());
+            _application.SetGPUEngine(new GPUEngine());
             _application.Init();
             _window.Visible = true;
             
