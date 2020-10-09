@@ -1,8 +1,9 @@
 ﻿using System;
+using Pulsar.Contexts.OpenGL;
 
 namespace Pulsar.Graphics
 {
-    public class GPUShader : GPUResource
+    public class GPUShader : GPUResource, IDisposable
     {
         private ShaderStages _stage;
         
@@ -14,6 +15,11 @@ namespace Pulsar.Graphics
         public ShaderStages GetStage()
         {
             return _stage;
+        }
+
+        public void Dispose()
+        {
+            Gl.glDeleteShader(this);
         }
     }
 }

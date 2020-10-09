@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Pulsar.Contexts.OpenGL;
 using Pulsar.Maths;
 
@@ -35,22 +36,29 @@ namespace Pulsar.Graphics
             throw new System.NotImplementedException();
         }
 
+        public void SetUniform(string name, Matrix mat)
+        {
+            _context.BindShaderProgram(_program);
+            Gl.glUniformMatrix4fv(Gl.glGetUniformLocation(_program, name), 1, false, mat.ToArray());    
+        }
+        
         public void UpdateData(uint indexBuffer, uint destOffset, byte[] data, uint length)
         {
             GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            Gl.glNamedBufferSubData(_buffers[0].GetHandle(), 0, (uint)data.Length, handle.AddrOfPinnedObject());
+            Gl.glNamedBufferSubData(_buffers[indexBuffer], 0, (uint)data.Length, handle.AddrOfPinnedObject());
             handle.Free();
         }
 
         public void Draw(GPUDrawCommand command)
-        {
+        {/*
             for (int i = 0; i < _format.GetBufferFormats().Length; i++)
             {
-                Gl.glVertexArrayVertexBuffer(_format, _format.GetBufferFormats()[i].BufferIndex, _buffers[i], _format.GetBufferFormats()[i].Offset, (int)_format.GetBufferFormats()[i].Stride);
-                i++;
-            }
+                GPUBufferFormat bf = _format.GetBufferFormats()[i];
+                Gl.glVertexArrayVertexBuffer(_format, bf.BufferIndex, _buffers[i], bf.Offset, (int)bf.Stride);
+            }*/
             _context.BindShaderProgram(_program);
             _context.BindFormat(_format);
+            _context.ReadErrors();
             command.Draw();
         }
     }

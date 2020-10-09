@@ -28,5 +28,7 @@
         /// to the start of the vertex buffer binding this attribute fetches from.
         /// </summary>
         public uint RelativeOffset;
+
+        public uint Location;
     }
 }

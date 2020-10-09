@@ -1,17 +1,26 @@
-﻿using Pulsar.Contexts.OpenGL;
+﻿using System.Collections.Generic;
+using Pulsar.Contexts.OpenGL;
 
 namespace Pulsar.Graphics
 {
     public class GPUBuffer : GPUResource
     {
         
-        public GPUBuffer(uint h) : base(h)
+        protected uint _size;
+        
+        public GPUBuffer(uint h, uint size) : base(h)
         {
+            _size = size;
         }
 
-        public void Upload(BufferData data, UsageStorage usage)
+        public virtual void Upload(BufferData data)
         {
-            Gl.glNamedBufferData(_handle, data.GetUsedSize(), data.GetPtr(), (int)usage);
+            Upload(data, 0);
+        }
+
+        public virtual void Upload(BufferData data, uint offset)
+        {
+            Gl.glNamedBufferSubData(_handle, offset, data.GetUsedSize(), data.GetPtr());
         }
     }
 }
