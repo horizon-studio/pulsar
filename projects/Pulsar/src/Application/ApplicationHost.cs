@@ -54,6 +54,7 @@ namespace Pulsar.Application
                     _updatesCount++;
                 } else if ((_targetRender > 0 && _now - _lastRender > _renderInterval) || _targetRender == -1) {
                     _application.Render(_lastDelta);
+                    _application.GetEngine().Render(_lastDelta);
                     _window.SwapBuffers();
                     Glfw.PollEvents();
                     if (_window.IsClosing)

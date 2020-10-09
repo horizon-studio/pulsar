@@ -11,18 +11,20 @@ namespace Pulsar.Graphics
                
         }
         
-        public void Render()
+        public void Render(float delta)
         {
             foreach (var gpuRenderStage in _stages)
             {
                 gpuRenderStage.OnRenderStart(this);
-                gpuRenderStage.OnRender(this);
+                gpuRenderStage.OnRender(this, delta);
+                gpuRenderStage.OnRenderEnd(this);
             }
         }
 
         public void AddStage(GPURenderStage stage)
         {
             _stages.Add(stage);
+            stage.OnInit(this);
         }
 
         public void RemoveStage(GPURenderStage stage)

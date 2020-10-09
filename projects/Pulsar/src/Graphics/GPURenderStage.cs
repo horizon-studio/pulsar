@@ -5,19 +5,21 @@ namespace Pulsar.Graphics
     public abstract class GPURenderStage
     {
         private List<GPURenderTask> _tasks = new List<GPURenderTask>();
+        public abstract void OnInit(GPUEngine engine);
         public abstract void OnRenderStart(GPUEngine engine);
         public abstract void OnRenderEnd(GPUEngine engine);
 
-        public void OnRender(GPUEngine engine)
+        public void OnRender(GPUEngine engine, float delta)
         {
             foreach (var gpuRenderTask in _tasks)
             {
-                gpuRenderTask.OnRender(engine, this);
+                gpuRenderTask.OnRender(engine, this, delta);
             }
         }
 
-        public void AddTask(GPURenderTask task)
+        public void AddTask(GPUEngine engine, GPURenderTask task)
         {
+            task.Init(engine, this);
             _tasks.Add(task);
         }
 

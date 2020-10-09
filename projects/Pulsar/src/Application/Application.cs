@@ -29,7 +29,7 @@ namespace Pulsar.Application
 
         public abstract void Update(float delta);
 
-        public abstract void Render(float delta);
+        public virtual void Render(float delta) {}
 
         public abstract void Stop();
 
@@ -48,6 +48,11 @@ namespace Pulsar.Application
         public void SetGPUEngine(GPUEngine engine)
         {
             _gpuEngine = engine;
+        }
+
+        public GPUEngine GetEngine()
+        {
+            return _gpuEngine;
         }
     }
 }
