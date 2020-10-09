@@ -19,7 +19,7 @@ namespace Pulsar.Graphics
 
         public void AddTask(GPUEngine engine, GPURenderTask task)
         {
-            task.Init(engine, this);
+            task.OnInit(engine, this);
             _tasks.Add(task);
         }
 
