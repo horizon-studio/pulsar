@@ -15,5 +15,20 @@ namespace Pulsar.Graphics
                 gpuRenderTask.OnRender(context, this);
             }
         }
+
+        public void AddTask(GPURenderTask task)
+        {
+            _tasks.Add(task);
+        }
+
+        public void RemoveTask(GPURenderTask task)
+        {
+            _tasks.Remove(task);
+        }
+
+        public void ClearTasks()
+        {
+            _tasks.Clear();
+        }
     }
 }
