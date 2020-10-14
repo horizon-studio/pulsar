@@ -80,7 +80,7 @@ namespace Pulsar.Application
             _application.Stop();
         }
 
-        public void SetApp(Pulsar.Application.Application app)
+        public void SetApp(Application app)
         {
             _application?.Stop();
             _application?.Dispose();
