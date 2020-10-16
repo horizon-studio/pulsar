@@ -4,8 +4,7 @@ Pulsar is a small C# engine, his main purpose is to provide high extending/moddi
 It is part of [Ubercube](https://github.com/horizon-studio/ubercube) project, and will be developped along with.
 
 The engine isn't mature for now, some docs will come in future.
-
-I have no plan to make a full featured engine, it's just a framework for my personnal projects.
+WeI have no plan to make a full featured engine, it's just a framework for ur projects.
 However you can use it for whatever you want as long as the licence is respected.
 Pull request/issue/debate will be well received.
 
