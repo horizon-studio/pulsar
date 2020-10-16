@@ -1,6 +1,5 @@
 <img src="https://cdn.discordapp.com/attachments/460497210535182344/760988824381161472/pulsar-colo.png" width="200">
-[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
-[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
 Pulsar is a small C# engine, his main purpose is to provide high extending/modding capabilities and an easy framework to work with.
 It is part of [Ubercube](https://github.com/horizon-studio/ubercube) project, and will be developped along with.
 
