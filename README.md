@@ -6,6 +6,7 @@ It is part of [Ubercube](https://github.com/horizon-studio/ubercube) project, an
 The engine isn't mature for now, some docs will come in future.
 
 I have no plan to make a full featured engine, it's just a framework for my personnal projects.
-However you can use it for whatever you want as long as the licence is respected, and pull request/issue/debate will be well received.
+However you can use it for whatever you want as long as the licence is respected.
+Pull request/issue/debate will be well received.
 
 If your are searching for a C#/C++ engine take a look at [Flax Engine](https://github.com/FlaxEngine/FlaxAPI), it's definitly a great engine, give it a try.
